@@ -17,8 +17,13 @@
       const code = query.get("code");
       if (code) {
         const deeplink = `myapp://auth?code=${encodeURIComponent(code)}`;
-        document.getElementById("fallbackLink").href = deeplink;
-        window.location.href = deeplink;
+        const fallback = document.getElementById("fallbackLink");
+        fallback.href = deeplink;
+
+        // Use a short delay to allow setting fallback before redirecting
+        setTimeout(() => {
+          window.location.href = deeplink;
+        }, 100);
       } else {
         document.body.innerHTML = '<h2>Missing code parameter in URL</h2>';
       }
