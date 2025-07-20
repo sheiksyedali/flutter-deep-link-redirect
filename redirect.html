@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting to App...</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 3em; }
+  </style>
+</head>
+<body>
+  <h2>Redirecting you to the app...</h2>
+  <p>If you are not redirected, <a id="fallbackLink">tap here</a>.</p>
+  <script>
+    (function () {
+      const query = new URLSearchParams(window.location.search);
+      const code = query.get("code");
+      if (code) {
+        const deeplink = `myapp://auth?code=${encodeURIComponent(code)}`;
+        document.getElementById("fallbackLink").href = deeplink;
+        window.location.href = deeplink;
+      } else {
+        document.body.innerHTML = '<h2>Missing code parameter in URL</h2>';
+      }
+    })();
+  </script>
+</body>
+</html>
